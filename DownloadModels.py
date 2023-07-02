@@ -4,13 +4,20 @@ import shutil
 import subprocess
 import sys
 
+import Common
 from Common import *
 
-__version__ = 0.1
+__version__ = 0.2
 # Variable holds the dictionary from json file
 modelDefinitions = {}
 # Variable holds all the models as single list
 modelDefinitionsList = []
+
+
+def printHeader():
+    Common.printHeader(
+        "Abominable Intelligence: Machine Cult Adept (Module 3 - Adeptus Administratum)",
+        os.path.basename(__file__), "This script provides an effortless download process for AI models.", __version__)
 
 
 def get_available_space(path="."):
@@ -29,16 +36,40 @@ def print_models():
     for (model_id, model_name, model_url, model_comment) in modelDefinitionsList:
         isDownloaded = os.path.exists(os.path.join(MODEL_DIR, model_id))
         if isDownloaded:
-            logGreen(f"{i}. (+){model_name} - {model_comment}")
+            print(GREEN(f"{i}. (+){model_name} - {model_comment}"))
         else:
-            logWhite(f"{i}. {model_name} - {model_comment}")
+            print(WHITE(f"{i}. {model_name} - {model_comment}"))
         i = i + 1
+
+
+def print_models_sectioned():
+    legacy_cutoff = 12
+    print(GREEN("Legacy models:"))
+    i = 1
+    for (model_id, model_name, model_url, model_comment) in modelDefinitionsList[:legacy_cutoff]:
+        isDownloaded = os.path.exists(os.path.join(MODEL_DIR, model_id))
+        if isDownloaded:
+            print(GREEN(BOLD(f"{i}. (+){model_name} - {model_comment}")))
+        else:
+            print(WHITE(f"{i}. {model_name} - {model_comment}"))
+        i += 1
+    print()
+
+    print(GREEN("Modern models:"))
+    for (model_id, model_name, model_url, model_comment) in modelDefinitionsList[legacy_cutoff:]:
+        isDownloaded = os.path.exists(os.path.join(MODEL_DIR, model_id))
+        if isDownloaded:
+            print(GREEN(BOLD(f"{i}. (+){model_name} - {model_comment}")))
+        else:
+            print(WHITE(f"{i}. {model_name} - {model_comment}"))
+        i += 1
+    print()
 
 
 def clone_model(url, name, folder_name):
     model_path = os.path.join(MODEL_DIR, folder_name)
     if os.path.exists(model_path):
-        logGreen(f"Model {name} already exists. Do you want to redownload it? (y/N): ", end="")
+        print(GREEN(f"Model {name} already exists. Do you want to redownload it? (y/N): "))
         if input().lower() != "y":
             return
 
@@ -46,18 +77,16 @@ def clone_model(url, name, folder_name):
     total, used, free = shutil.disk_usage(os.path.dirname(model_path))
     required_space = 10 * (2 ** 30)  # 10 GB in bytes
     if free < required_space:
-        logGreen(
-            f"Not enough disk space available to download {name}. "
-            f"Please free up at least {required_space / (2 ** 30):.2f} GB and try again."
-        )
+        print(GREEN(f"Not enough disk space available to download {name}. "))
+        print(WHITE(f"Please free up at least {required_space / (2 ** 30):.2f} GB and try again."))
         return
-    logGreen(f"Downloading {name}...")
+    print(GREEN(f"Downloading {name}..."))
     try:
-        subprocess.run(["git", "clone", "--depth", "1", url, model_path], check=True)
-        logGreen(f"Download of {name} completed.")
+        subprocess.run(["git", "clone", "--progress", "--depth", "1", url, model_path], check=True)
+        print(GREEN(f"Download of {name} completed."))
         subprocess.run(["git", "lfs", "pull"], cwd=model_path, check=True)
     except subprocess.CalledProcessError:
-        logGreen(f"Failed to download {name}. The model may not be available online.")
+        print(GREEN(f"Failed to download {name}. The model may not be available online."))
 
 
 def remove_existing_model(folder_name):
@@ -70,16 +99,16 @@ def validate_user_input(user_input, max_value):
         model_numbers = list(map(int, user_input.split(",")))
         for num in model_numbers:
             if num < 1 or num > max_value:
-                logGreen("Invalid model number, please enter a valid number.")
+                print(GREEN("Invalid model number, please enter a valid number."))
                 return None
     except ValueError:
-        logGreen("Invalid input, please enter a comma separated list of numbers.")
+        print(GREEN("Invalid input, please enter a comma separated list of numbers."))
         return None
     return model_numbers
 
 
 def main():
-    printHeader("DownloadModel - used to download particular models.", __version__)
+    printHeader()
 
     # Check if the models directory exists
     if not os.path.exists(MODEL_DIR):
@@ -90,15 +119,12 @@ def main():
         modelDefinitions = json.load(data)
     build_models_list()
 
-    # Temporary information
-    print("!!! Below models are only legacy models. Modern models will be added in further releases !!!\n")
-
     # Print all models as a list
-    print_models()
+    print_models_sectioned()
 
     model_numbers = None
     while model_numbers is None:
-        logGreen("Enter the comma-separated model numbers to run: ")
+        print(GREEN("Enter the comma-separated model numbers to download: "))
         user_input = input().strip()
         if not user_input:
             sys.exit(0)
@@ -108,7 +134,7 @@ def main():
         model_id, model_name, model_url, _ = modelDefinitionsList[num - 1]
 
         if os.path.exists(os.path.join(MODEL_DIR, model_id)):
-            logGreen(f"Model {model_name} already exists. Do you want to redownload it? (y/N): ")
+            print(GREEN(f"Model {model_name} already exists. Do you want to redownload it? (y/N): "))
             confirm = input().lower().strip()
             if confirm == "y":
                 remove_existing_model(model_id)
@@ -116,8 +142,10 @@ def main():
         else:
             clone_model(model_url, model_name, model_id)
 
-    logGreen("\nDownload summary:")
-    print_models()
+    print(GREEN("\nDownload summary:"))
+    print_models_sectioned()
+
+    printFooter()
 
 
 if __name__ == "__main__":

@@ -1,14 +1,27 @@
 {
-    "bloomz": [["bloomz-560m", "BigScience BloomZ 560M", "https://huggingface.co/bigscience/bloomz-560m", "2,3GB Compact, efficient model, very poor results"],
-               ["bloomz-1b1", "BigScience BloomZ 1B1", "https://huggingface.co/bigscience/bloomz-1b1", "4,3GB; Small size, smallest usable from Bloomz family"],
-               ["bloomz-1b7", "BigScience BloomZ 1B7", "https://huggingface.co/bigscience/bloomz-1b7", "6,9GB; Balanced size-performance ratio"],
-               ["bloomz-3b","BigScience BloomZ 3B", "https://huggingface.co/bigscience/bloomz-3b", "12,1GB; Large model, higher capacity"],
-               ["bloomz-7b1", "BigScience BloomZ 7B1", "https://huggingface.co/bigscience/bloomz-7b1", "14,4GB Very large model"],
-               ["bloomz", "BigScience BloomZ", "https://huggingface.co/bigscience/bloomz", "Gigantic model, good for benchmarking CPU-only inference setups"]],
-    "gpt2": [["gpt2", "GPT-2", "https://huggingface.co/gpt2", "3,7GB; Smallest usable GPT2 model"],
-             ["gpt2-medium", "GPT-2 Medium", "https://huggingface.co/gpt2-medium", "7,6GB; Moderate size, quick response"],
-             ["gpt2-large", "GPT-2 Large", "https://huggingface.co/gpt2-large", "16,2GB; Large size, improved precision"],
-             ["gpt2-xl", "GPT-2 XL", "https://huggingface.co/gpt2-xl", "25,6GB; Larger, top-tier results for a legacy GPT-2 model"],
-             ["distilgpt2", "DistilGPT-2", "https://huggingface.co/distilgpt2", "3,2GB; Compact, comparable performance to GPT-2"]],
-    "gptj": [["gpt-j-6b", "GPT-J 6B", "https://huggingface.co/EleutherAI/gpt-j-6b", "72,6GB; Good performance, medium size"]]
+    "bloomz": [
+        ["bloomz-560m", "BigScience BloomZ 560M", "https://huggingface.co/bigscience/bloomz-560m", "2,3GB Compact, efficient model, very poor results"],
+        ["bloomz-1b1", "BigScience BloomZ 1B1", "https://huggingface.co/bigscience/bloomz-1b1", "4,3GB; Small size, smallest usable from Bloomz family"],
+        ["bloomz-1b7", "BigScience BloomZ 1B7", "https://huggingface.co/bigscience/bloomz-1b7", "6,9GB; Balanced size-performance ratio"],
+        ["bloomz-3b","BigScience BloomZ 3B", "https://huggingface.co/bigscience/bloomz-3b", "12,1GB; Large model, higher capacity"],
+        ["bloomz-7b1", "BigScience BloomZ 7B1", "https://huggingface.co/bigscience/bloomz-7b1", "14,4GB Very large model"],
+        ["bloomz", "BigScience BloomZ", "https://huggingface.co/bigscience/bloomz", "Gigantic model, good for benchmarking CPU-only inference setups"]
+    ],
+    "gpt2": [
+        ["gpt2", "GPT-2", "https://huggingface.co/gpt2", "3,7GB; Smallest usable GPT2 model"],
+        ["gpt2-medium", "GPT-2 Medium", "https://huggingface.co/gpt2-medium", "7,6GB; Moderate size, quick response"],
+        ["gpt2-large", "GPT-2 Large", "https://huggingface.co/gpt2-large", "16,2GB; Large size, improved precision"],
+        ["gpt2-xl", "GPT-2 XL", "https://huggingface.co/gpt2-xl", "25,6GB; Larger, top-tier results for a legacy GPT-2 model"],
+        ["distilgpt2", "DistilGPT-2", "https://huggingface.co/distilgpt2", "3,2GB; Compact, comparable performance to GPT-2"]
+    ],
+    "gptj": [
+        ["gpt-j-6b", "GPT-J 6B", "https://huggingface.co/EleutherAI/gpt-j-6b", "72,6GB; Good performance, medium size"]
+    ],
+    "HF": [
+        ["vicuna-7B-1.1-HF", "Vicuna 7B 1.1 HF", "https://huggingface.co/TheBloke/vicuna-7B-1.1-HF", "13,5GB; Basic modern model for legacy machines"],
+        ["Wizard-Vicuna-13B-Uncensored-HF", "Wizard-Vicuna-13B-Uncensored-HF", "https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-HF", "18,3GB; This is an acceptable mid-sized model suitable for an average home computer"]
+    ],
+    "IXL": [
+        ["instructor-xl","Instructor XL","https://huggingface.co/hkunlp/instructor-xl", "Instruction-finetuned text embedding model that can generate text embeddings tailored to any task. (This model is required to run SimpleQueryFile.py)"]
+    ]
 }

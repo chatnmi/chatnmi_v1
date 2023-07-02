@@ -7,25 +7,38 @@ MODEL_DIR = "models"
 COLOR_OUTPUT = True
 
 
-def logGreen(log1, log2="", end="\n"):
+# Function used to "color" the string
+def GREEN(str) -> str:
     if COLOR_OUTPUT:
-        print(f"\033[1;32;40m{log1}\033[0m{log2}", end=end)
+        return f"\033[0;32;40m{str}\033[0m"
     else:
-        print(f"{log1}{log2}", end=end)
+        return str
 
 
-def logWhite(log1, end="\n"):
+def BOLD(str) -> str:
+    return f"\033[1m{str}\033[0m"
+
+
+def WHITE(str) -> str:
     if COLOR_OUTPUT:
-        print(f"\033[1;37;40m{log1}\033[0m", end=end)
+        return f"\033[1;37;40m{str}\033[0m"
     else:
-        print(f"{log1}", end=end)
+        return str
 
 
-def printHeader(description, version):
-    logGreen("\n\tChatNMI (No Moral Issues) - Tech-Priest Chronologist: AI Timescale Contrast (Module 5)")
-    logGreen("\n\t" + description)
-    logGreen("\tversion:", str(version))
-    logGreen("\nby: ", "Konrad Jedrzejczyk, Marek Zmyslowski\n\n")
+def YELLOW(str) -> str:
+    if COLOR_OUTPUT:
+        return f"\033[93m{str}\033[0m"
+    else:
+        return str
+
+
+def printHeader(intro, script_name, description, version, long_description=""):
+    print(GREEN(f"\n\t{intro}"))
+    print(GREEN(BOLD("\n\t" + script_name) + " - " + description))
+    print(GREEN("\tversion:") + WHITE(str(version)))
+    print(GREEN("\n\tby: ") + WHITE(BOLD("Konrad Jedrzejczyk, Marek Zmyslowski\n")))
+    print(GREEN(long_description))
 
 
 def printFooter():
@@ -81,4 +94,4 @@ def printFooter():
     ]
 
     random_quote = random.choice(quotes)
-    logGreen(f'"{random_quote["quote"]}" - {random_quote["author"]}')
+    print(GREEN(f'"{random_quote["quote"]}" - {random_quote["author"]}'))
