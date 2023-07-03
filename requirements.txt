@@ -20,4 +20,7 @@ PyPDF2
 tiktoken
 faiss-cpu
 torchvision
+sentencepiece
+instructorembedding
+sentence-transformers
 protobuf==3.20.0
