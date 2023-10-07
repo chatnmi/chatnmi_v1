@@ -1,7 +1,7 @@
 import random
 
 # Change this to a directory without sudo access if necessary, e.g. os.path.join(os.environ["HOME"], "models")
-MODEL_DIR = "models"
+MODEL_DIR = ".\models"
 
 # Variable used to determine the output formatting. If it is set to False, everything will be in default colors.
 COLOR_OUTPUT = True
